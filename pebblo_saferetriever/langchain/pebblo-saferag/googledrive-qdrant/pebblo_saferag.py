@@ -11,7 +11,7 @@ from langchain_community.chains.pebblo_retrieval.models import (
 from langchain_community.document_loaders import UnstructuredFileIOLoader
 from langchain_community.document_loaders.pebblo import PebbloSafeLoader
 from langchain_community.vectorstores.qdrant import Qdrant
-from langchain_google_community import GoogleDriveLoader
+from langchain_googledrive.document_loaders import GoogleDriveLoader
 from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_openai.llms import OpenAI
 from utils import format_text, get_input_as_list
@@ -39,7 +39,6 @@ class SafeRetrieverSemanticRAG:
         self.loader = PebbloSafeLoader(
             GoogleDriveLoader(
                 folder_id=folder_id,
-                token_path="./google_token.json",
                 recursive=True,
                 file_loader_cls=UnstructuredFileIOLoader,
                 file_loader_kwargs={"mode": "elements"},
@@ -138,14 +137,18 @@ if __name__ == "__main__":
     in_folder_id_def = "<google-drive-folder-id>"
     ing_user_email_def = "<ingestion-user-email-id>"
 
-    print("Please enter ingestion user details for loading data...")
-    ingestion_user_email_address = (
-        input(f"email address ({ing_user_email_def}): ") or ing_user_email_def
-    )
-    ingestion_user_service_account_path = (
-        input(f"service-account.json path ({service_acc_def}): ") or service_acc_def
-    )
-    input_folder_id = input(f"Folder id ({in_folder_id_def}): ") or in_folder_id_def
+    # print("Please enter ingestion user details for loading data...")
+    # ingestion_user_email_address = (
+    #     input(f"email address ({ing_user_email_def}): ") or ing_user_email_def
+    # )
+    # ingestion_user_service_account_path = (
+    #     input(f"service-account.json path ({service_acc_def}): ") or service_acc_def
+    # )
+    # input_folder_id = input(f"Folder id ({in_folder_id_def}): ") or in_folder_id_def
+
+    ingestion_user_email_address = 'pebblo@pebblo-test.iam.gserviceaccount.com'
+    ingestion_user_service_account_path = 'credentials/service-account.json'
+    input_folder_id = '1o7NCulA0A7kcB3f2T4dYWYmEbtkL6OkB'
 
     rag_app = SafeRetrieverSemanticRAG(
         folder_id=input_folder_id, collection_name=input_collection_name
